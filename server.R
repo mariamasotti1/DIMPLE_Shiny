@@ -9,8 +9,8 @@
 
 library(shiny);library(ggplot2);library(dplyr);library(here);library(spatstat);library(tidyr);library(purrr);library(fuzzyjoin)
 library(devtools);library(ggpubr);library(viridis);library(waiter)
-devtools::load_all()
-source("helpers.R")
+#devtools::install_github("nateosher/DIMPLE")
+library(DIMPLE)
 
 
 options(shiny.maxRequestSize = 100000*1024^2)
