@@ -18,6 +18,11 @@ options(shiny.maxRequestSize = 100000*1024^2)
 
 function(input, output, session) {
   
+  theme_set(
+    theme_bw() +
+      theme(legend.position = "right",legend.direction = "vertical", legend.box = "horizontal",plot.title=element_text(face="bold"),legend.title=element_text(face="bold",size=12),legend.text=element_text(face="bold",size=12),axis.text = element_text(face="bold",size=12),axis.title = element_text(face="bold",size=12),strip.text = element_text(face = "bold",size=12))
+  )
+  
   experiment<-reactive({
      
     if(!is.null(input$file1)){
@@ -52,7 +57,7 @@ function(input, output, session) {
   ppplot<-function(){
     req(experiment())
     req(input$slide_ids_to_plot)
-    if(input$y_n_quantile_mask=="Y"){
+    if(input$y_n_quantile_mask=="Yes"){
       req(experiment1())
       req(input$slide_ids_to_plot)
       qdist1<-filter_mltplx_objects(experiment(),input$slide_ids_to_plot)[[1]]$quantile_dist
@@ -93,7 +98,7 @@ function(input, output, session) {
     req(experiment())
     req(input$slide_ids_to_plot)
     req(input$y_n_qdist)
-    if(input$y_n_qdist=="Y"){
+    if(input$y_n_qdist=="Yes"){
       plot_qdist(experiment(),input$slide_ids_to_plot,mode=input$dm_plot_mode)
     }else{
       plot_dist(experiment(),input$slide_ids_to_plot,mode=input$dm_plot_mode)
@@ -142,7 +147,7 @@ function(input, output, session) {
     req(input$strat_qdist)
     req(input$group_factor)
     adjust<-ifelse(input$adjust_counts=="Yes",TRUE,FALSE)
-    if(input$strat_qdist=="Y"){
+    if(input$strat_qdist=="Yes"){
       req(input$which_qdist)
 
       lmdist<-lm_qdist(exp,input$group_factor,interval=input$which_qdist,agg_fun = agg_list[[input$agg]],covariates = input$covariates,adjust_counts = adjust)
@@ -203,6 +208,11 @@ function(input, output, session) {
       #ggsave(ppplot(), filename = file)
       ggsave(file,plot=group_boxplot_or_cont())
     })
+  
+  url <- a("DIMPLE Github", href="https://github.com/nateosher/DIMPLE")
+  output$tab <- renderUI({
+    tagList(url)
+  })
 
 }
 

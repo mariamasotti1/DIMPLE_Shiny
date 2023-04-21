@@ -12,7 +12,7 @@ library(shiny);library(shinythemes);library(waiter)
 
 
 fluidPage(shinyjs::useShinyjs(),autoWaiter(),theme = shinytheme("slate"),
-          titlePanel("DIMPLE"),
+          titlePanel("DIMPLE: Distance based inference of cellular Interaction from MultiPLEx imaging"),
           tabsetPanel(
             tabPanel("Visualize Multiplex Object",
                      sidebarLayout(
@@ -33,12 +33,12 @@ fluidPage(shinyjs::useShinyjs(),autoWaiter(),theme = shinytheme("slate"),
                          span(tableOutput("contents"), style="color:green"),
                          tags$br(),
                          selectInput("slide_ids_to_plot","Select slide id to plot","",selected="",multiple=F),
-                         selectInput("y_n_quantile_mask","Plot quantile mask?",c("Y","N"),selected="N",multiple=F),
+                         selectInput("y_n_quantile_mask","Plot quantile mask?",c("Yes","No"),selected="No",multiple=F),
                          tags$br(),
                          selectInput("cell_types_to_plot","Select cell types to plot intensities","",selected="",multiple=T),
                          tags$br(),
                          selectInput("dm_plot_mode","Select mode for distance matrix plot",c("heatmap","network"),selected="",multiple=F),
-                         selectInput("y_n_qdist","Plot distances stratified by quantile?",c("Y","N"),selected="N",multiple=F)
+                         selectInput("y_n_qdist","Plot distances stratified by quantile?",c("Yes","No"),selected="No",multiple=F)
                          ),
                        mainPanel(
                          plotOutput('ppplot'),downloadButton("save_pp", "download plot"),
@@ -52,7 +52,7 @@ fluidPage(shinyjs::useShinyjs(),autoWaiter(),theme = shinytheme("slate"),
             tabPanel("Visualize Multiplex Experiment",
                      sidebarLayout(
                        sidebarPanel( "Test each pairwise distance for association with a patient-level covatiate from the patient metadata",
-                         selectInput("strat_qdist","Stratified by quantiles?",c("Y","N"),selected="N",multiple=F),
+                         selectInput("strat_qdist","Stratified by quantiles?",c("Yes","No"),selected="No",multiple=F),
                          selectInput("which_qdist","Which quantile?","",multiple=F),
                     
                          selectInput("group_factor","Select covariate to test","",selected="",multiple=F),
@@ -77,6 +77,62 @@ fluidPage(shinyjs::useShinyjs(),autoWaiter(),theme = shinytheme("slate"),
                          
                        )
                      )
+            ),
+            tabPanel("About the Developers",
+                     mainPanel(
+                       column(6, tags$figure(
+                         align = "center",
+                         tags$img(
+                           src = "logo.png",
+                           width = 400
+                         )
+                              ),tags$br(), p("We are MI-SPACE: an interdisciplinary group of faculty and students at the University of Michigan
+                                  developing Multiplex Imaging based Spatial Analytic tools for the discovery of cellular interactions in the
+                                  tumor microenvironment."),tags$br(),
+                         p("Check out the github for our R package here:"),uiOutput("tab")),
+                  column(3,
+                       tags$figure(
+                         align = "center",
+                         tags$img(
+                           src = "maria.png",
+                           width = 200
+                         ),
+                         tags$figcaption("Maria Masotti, PhD")
+                       ),tags$figure(
+                         align = "center",
+                         tags$img(
+                           src = "joel.png",
+                           width = 200
+                         ),
+                         tags$figcaption("Joel Eliason")
+                       ),
+                       tags$figure(
+                         align = "center",
+                         tags$img(
+                           src = "veera.png",
+                           width = 200
+                         ),
+                         tags$figcaption("Veera Baladandayuthapani, PhD")
+                       )
+                       ),column(3,
+                       tags$figure(
+                         align = "center",
+                         tags$img(
+                           src = "nate.png",
+                           width = 200
+                         ),
+                         tags$figcaption("Nate Osher")
+                       )
+                     ,                       tags$figure(
+                       align = "center",
+                       tags$img(
+                         src = "arvind.png",
+                         width = 200
+                       ),
+                       tags$figcaption("Arvind Rao, PhD")
+                     ))                        
+                     )
+                    
             )
 
           )
