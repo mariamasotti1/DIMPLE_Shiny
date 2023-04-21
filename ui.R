@@ -79,7 +79,7 @@ fluidPage(shinyjs::useShinyjs(),autoWaiter(),theme = shinytheme("slate"),
                      )
             ),
             tabPanel("About the Developers",
-                     mainPanel(
+                
                        column(6, tags$figure(
                          align = "center",
                          tags$img(
@@ -131,7 +131,7 @@ fluidPage(shinyjs::useShinyjs(),autoWaiter(),theme = shinytheme("slate"),
                        ),
                        tags$figcaption("Arvind Rao, PhD")
                      ))                        
-                     )
+                     
                     
             )
 
